@@ -1,0 +1,244 @@
+
+
+    class TicTacToe {
+    static char[][] board;              //This line declares a static 2D array of characters named board. This array represents the Tic-Tac-Toe game board.
+
+    public TicTacToe() {              //This line declares the constructor for the TicTacToe class. The constructor is called when an object of the class is created.
+                                        
+    board = new char[3][3];      // This line creates a new 2D array of characters with dimensions 3x3 and assigns it to the board variable. 
+                                             //This initializes the game board with 9 empty spaces.
+
+       
+   	 initBoard();                        //This line calls the initBoard() method to initialize the game board with empty spaces.
+
+   	 void initBoard() {			//This line declares the initBoard() method, which is responsible for initializing the game board.
+        				//inside init board method I'm going to iterate this entire array by assigning i to takecare row &  j to takecare of coloum//
+
+     	for (int i = 0; i < board.length; i++) {                // This line starts a loop that iterates over the rows of the board array. 
+                                                                                      //The loop initializes the variable i to 0, and it continues as long as i is less than the length of the board array.
+
+    	for (int j = 0; j < board[i].length; j++) {	/*This line starts a nested loop that iterates over the columns of the board array for the current row. 
+					    The loop initializes the variable j to 0, and it continues as long as j is less than the length of the current row of the 					                    */board array.
+       
+   	 board[i][j] = ' ';    	//This line assigns a space character (' ') to the current element in the board array at the row i and column j. 
+			//This sets the initial value of that element to an empty space.
+    }
+         }
+             }
+
+
+       ////now I want to initialize a space to the board
+   	 static void dispBoard() {        		  //This line declares the dispBoard() method, which is responsible for displaying the current state of the game board.
+        
+	System.out.println("-------------");  	  //This line prints a horizontal line to represent the top boundary of the game board.
+
+         for (int i = 0; i < board.length; i++) {  	  //This line starts a loop that iterates over the rows of the board array.
+	System.out.print("| "); 		  //  This line prints a vertical line to represent the left boundary of each row in the game board.
+       
+	for (int j = 0; j < board[i].length; j++) {	   //This line starts a nested loop that iterates over the columns of the board array for the current row.
+
+	 System.out.print(board[i][j] + " | ");            //This line prints the value of the current element in the board array at the row i and column j, 
+					           followed by a vertical line to separate the elements.
+
+		System.out.println();                     // This line moves the cursor to the next line, creating a new row in the game board.
+       		System.out.println("-------------");   //  This line prints a horizontal line to represent the bottom boundary of the game board after each row.
+  }
+       }
+            }
+  
+
+    static void placeMark(int row, int col, char mark) {     //This line declares the placeMark() method, which is responsible for placing a player's mark (X or O) on the game                                                                                         board at the specified row and column.
+
+	if (row >= 0 && row <= 2 && col >= 0 && col <= 2) {        // This line checks if the specified row and column values are within the valid range of the game board.
+
+	board[row][col] = mark;                       //This line assigns the value of mark (which represents the player's mark) to the element in the board array at specified                                                                                    row and column.
+       } 
+	else {	                                    //This line is the beginning of the else block, which is executed if the row and column values are not within the valid range.
+	System.out.println("Invalid Position");        // This line prints a message indicating that the specified position is invalid.
+       }
+      
+
+    static boolean checkColWin() {	      // This line declares the checkColWin() method, which checks if there is a winning combination in any column of the game                                                                                 board.
+	for (int j = 0; j <= 2; j++) {	       //This line starts a loop that iterates over the columns of the game board.
+
+	if (board[0][j] != ' ' && board[0][j] == board[1][j] && board[1][j] == board[2][j])  {        //This line checks if the elements in the current column (at index j) have the 									      same non-empty mark, indicating a win.
+			return true;	
+       			  }
+       			 return false;
+  	  }
+
+    static boolean checkRowWin() {	//This line declares the checkRowWin() method, which checks if there is a winning condition in any of the rows.
+  for (int i = 0; i <= 2; i++) {		// This line starts a loop to iterate through each row of the game board.
+
+      if (board[i][0] != ' ' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+                        //This line checks if the elements in the current row are not empty (' ') and if they are all equal. If this condition is met, it means there is a win in the row.
+
+   	 return true;	//   This line returns true indicating that there is a win in one of the rows.
+	}
+       }
+      	return false;      	//    This line is reached if no win condition is found in any row, so it returns false.
+        
+
+    static boolean checkDiagWin() {	//This line declares the checkDiagWin() method, which checks if there is a winning condition in any of the diagonals.
+
+        
+    if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[1][1] == board[2][2] || board[0][2] != ' ' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+       /* This line checks two conditions:
+    				(1) If the elements in the main diagonal (top-left to bottom-right) are not empty (' ') and if they are all equal, and
+ 				(2) if the elements in the anti-diagonal (top-right to bottom-left) are not empty and if they are all equal. 
+				     If any of these conditions are met, it means there is a win in one of the diagonals. */
+
+  	  return true; 		//   This line returns true indicating that there is a win in one of the diagonals.
+		  }
+	 return false;		//   This line is reached if no win condition is found in any diagonal, so it returns false.
+}
+        
+    static boolean checkDraw() {	//   This line declares the checkDraw() method, which checks if the game has resulted in a draw.
+	for (int i = 0; i <= 2; i++) {	//   This line starts a nested loop to iterate through each cell of the game board.
+        	for (int j = 0; j <= 2; j++) {	//   This line starts the inner loop to iterate through each column of the game board.
+        	if (board[i][j] == ' ') {		//   This line tells if any of the cells on the game board are empty (' '). If an empty cell is found, it means the game is not a draw.														
+
+		return false;	//   This line returns false indicating that the game is not a draw as there is at least one empty cell.
+
+       }
+            }
+                   }
+                             return true; // it is draw as non of the block is empty annd nobody wins
+    }
+}
+    abstract class Player {	//  This line declares an abstract class named Player
+        String name;		//  This line declares a String variable name to store the name of the player.
+        char mark;		//  This line declares a char variable mark to store the mark (symbol) of the player.
+        
+
+    abstract void makeMove(); 		//   This line declares an abstract method makeMove() that represents the action of making a move.
+                                                                        Each subclass of Player must provide its own implementation of this method.
+
+    boolean isValidMove(int row, int col) { 		//   This line declares a method isValidMove() that checks if a move is valid based on the specified row and column.
+        
+ if (row >= 0 && row <= 2 && col >= 0 && col <= 2) {         //    This line checks if the row and column values fall within the valid boundaries of the game board (3x3 grid).
+         if (TicTacToe.board[row][col] == ' ') {                          //This line checks if the specified cell on the game board is empty (represented by the space character ' ').
+        
+	return true;		// This line returns true indicating that the move is valid.
+		 }
+	 }
+   	 return false;  	     //  This line is reached if the move is either outside the boundaries or the specified cell is not empty, indicating that the move is invalid.
+
+
+    class HumanPlayer extends Player {  	                  //  This line declares a class named HumanPlayer that extends the Player class.
+     HumanPlayer(String name, char mark) {  	//  This line declares a constructor for the HumanPlayer class, which takes a String name and a char markparameters.
+
+        this.name = name;		//  This line assigns the name parameter to the name variable of the HumanPlayer class.
+         this.mark = mark;		//  This line assigns the mark parameter to the mark variable of the HumanPlayer class.
+
+  @Override  //an annotation that indicates that the following method overrides a method from the superclass.
+
+ void makeMove() {		                                  //  This line provides the implementation for the makeMove() method inherited from the Player class.
+   Scanner scan = new Scanner(System.in);	//     This line creates a new Scanner object for reading input from the user.
+
+ 	do {		                                                    //   This line starts a do-while loop, which will continue until a valid move is made.
+	System.out.println("Enter the Row and Coloum");     //    This line displays a prompt to the user, asking for the row and column numbers of their move.
+	row = scan.nextInt();			  //     This line reads an integer input from the user and assigns it to the row variable.
+	 col = scan.nextInt();			  //      This line reads another integer input from the user and assigns it to the col variable
+       
+ } 
+	while (!isValidMove(row, col));	//This line checks if the move is valid by calling isValidMove() method inherited from the Player class.
+				      If the move is not valid, the loop continues.
+	TicTacToe.placeMark(row, col, mark);        //  This line calls the placeMark() method of the TicTacToe class to place the player's mark on the game board.
+      }
+
+}
+
+                                                               //Ai_Player class://
+
+    class Ai_Player extends Player {  	                 // This line declares a class named Ai_Player that extends the Player class.
+	Ai_Player(String name, char mark) {	//  This line declares a constructor for the Ai_Player class, which takes a String name and a char mark as parameters.
+ 	this.name = name;			//  This line assigns the name parameter to the name variable of the Ai_Player class.
+	this.mark = mark;			//  This line assigns the mark parameter to the mark variable of the Ai_Player class.
+ @Override
+        
+    void makeMove() {		                               //  This line provides the implementation for the makeMove() method inherited from the Player class.
+	int row;			              //   This line declares an integer variable row to store the randomly generated row number.
+                int col;				// This line declares an integer variable col to store the randomly generated column number.
+       
+
+    Scanner scan = new Scanner(System.in);
+        
+    do {
+        Random r = new Random();		//   This line creates a new Random object for generating random numbers.
+ 	 row = r.nextInt(3);			//   This line generates a random integer between 0  & 3 and assigns it to the row variable.
+
+	col = r.nextInt(3);		//   This line generates a random integer between 0 (inclusive) and 3 (exclusive) and assigns it to the col variable.
+
+	} 
+
+      while (!isValidMove(row, col));//  This line checks if the move is valid by calling the isValidMove() method inherited from the Player class. If the move is not valid, 					the loop continues.
+       
+
+    TicTacToe.placeMark(row, col, mark);		//   This line calls the placeMark() method of the TicTacToe class to place the AI player's mark on the game board.
+        
+	}
+       }
+
+
+    public class Launch_Game { 			//   This is the Main Class
+    public static void main(String[] args) {			//main Method or entry Point of Program
+       
+    TicTacToe t = new TicTacToe();           //  This line creates a new instance of the TicTacToe class and assigns it to the variable t. This instance represents the game board.
+
+    HumanPlayer p1 = new HumanPlayer ("Bob", 'x');       //  This line creates a new instance of the HumanPlayer class with the name "Bob" and mark 'x', and assigns it to 						the variable p1. This represents the first human player.
+       
+
+    Ai_Player p2 = new Ai_Player("Grin", 'o');      //This line creates a new instance of the Ai_Player class with the name "Grin" and mark 'o', and assigns it to the variablep2  					//This represents the AI player.
+
+      
+    Player cp;		//This line declares a variable cp of type Player. This variable will represent the current player during the game.
+   cp = p1;			//This line assigns the p1 (HumanPlayer) instance to the cp variable, indicating that the game starts with the human player making the 				first move.
+while (true) {	//  This line starts an infinite loop that represents the game flow. The loop will continue until a break statement is encountered.
+
+  System.out.println(cp.name + " Turn");		//This line prints the name of the current player whose turn it is.
+
+  cp.makeMove(); 		//    This line calls the makeMove() method of the current player (cp), which allows the player to make a move on the game board.
+ 
+TicTacToe.dispBoard();	//This line calls the dispBoard() method of the TicTacToe class, which displays the current state of the game board.
+
+        
+    if (TicTacToe.checkColWin() || TicTacToe.checkRowWin() || TicTacToe.checkDiagWin()) {
+						             /* This line checks if any of the win conditions (checkColWin(),
+	 						checkRowWin(), 
+							or checkDiagWin()) in the TicTacToe class are satisfied. 
+							If any of them returns true, it means that the current player has won the game.   */
+       		
+
+    System.out.println(cp.name + " Has Won ");  //  This line prints a message indicating that the current player has won the game.
+
+break;			//  This line breaks out of the infinite loop since the game has ended with a win.
+        
+else if(TicTacToe.checkDraw()) {	// This line checks if the game is a draw by calling the checkDraw() method of the TicTacToe class. If it returns true, it means 					      that the game has ended in a draw.
+      System.out.println(" Game is Draw");	//   This line prints a message indicating that the game has ended in a draw.
+        
+ break;		//   This line breaks out of the infinite loop since the game has ended in a draw.
+       
+
+    else {		//   This line is reached if neither a win nor a draw condition is satisfied, indicating that the game should continue.
+        
+
+   if (cp == p1) {  //This line checks if the current player (cp) is equal to p1 (HumanPlayer). If they are equal, it means that it's currently the turn of the first human player.
+        
+
+    cp = p2;		// This line assigns the p2 (Ai_Player) instance to the cp variable, indicating that the AI player should make the next move.
+        
+
+    } 
+else { 		//  This line is reached if the condition in line 19 is not satisfied, indicating that it's currently the turn of the AI player.
+        
+
+    cp = p1; 	//  This line assigns the p1 (HumanPlayer) instance to the cp variable, indicating that the first human player should make the next move.
+       
+
+  	         }
+  	   }
+            }
+      }
+ }
+
